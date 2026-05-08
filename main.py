@@ -123,3 +123,20 @@ plt.xticks(rotation=0)
 plt.tight_layout()
 plt.show()
 
+#Better correlation - include age_group as encoded
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['addiction_encoded'] = le.fit_transform(df['addiction_level'])
+
+#Usage by platform AND addiction level together
+platform_addiction = df.groupby(['primary_platform', 'addiction_level'])['mental_health_score'].mean().unstack()
+platform_addiction.plot(kind='bar', figsize=(10,6))
+plt.title('Mental Health Score by Platform and Addiction Level')
+plt.tight_layout()
+plt.show()
+
+#Screen time before sleep vs mental health by addiction
+sns.lmplot(data=df.sample(2000), x='screen_time_before_sleep', y='mental_health_score',
+           hue='addiction_level', palette='RdYlGn_r', scatter_kws={'alpha':0.3})
+plt.title('Screen Time Before Sleep vs Mental Health')
+plt.show()
