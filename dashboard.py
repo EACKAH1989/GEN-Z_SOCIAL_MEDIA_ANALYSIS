@@ -1,3 +1,4 @@
+
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -5,7 +6,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, classification_report
 from sklearn.inspection import permutation_importance
-
 
 df = pd.read_csv("genz_social_media_usage_1M.csv")
 
