@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 
 #  Load & prep
-df = pd.read_csv("/Users/ataka/Downloads/genz_social_media_usage_1M.csv")
+df = pd.read_csv("genz_social_media_usage_1M.csv")
 
 df['age_group'] = pd.cut(
     df['age'],
