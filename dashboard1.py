@@ -10,49 +10,33 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 
 #  Load & prep
-import os
-os.environ["MPLBACKEND"] = "Agg"
-
 import requests
 import io
-import gc  # garbage collector
 
 file_id = "13Ikzo0D-63clhK88URoF4y8ZUuKgjhNV"
 
 print("Loading dataset...")
 session = requests.Session()
+
+# First request to get the confirmation token
 response = session.get(
     "https://drive.google.com/uc",
     params={"export": "download", "id": file_id},
     stream=True
 )
+
+# Extract confirmation token from cookies
 token = response.cookies.get("download_warning")
+
+# Second request with confirmation token
 response = session.get(
     "https://drive.usercontent.google.com/download",
     params={"id": file_id, "export": "download", "confirm": token or "t"},
     stream=True
 )
 
-# Load only 50k rows, only the columns needed
-COLS = [
-    'age', 'gender', 'country', 'daily_usage_hours',
-    'primary_platform', 'num_platforms_used', 'purpose',
-    'avg_session_minutes', 'night_usage',
-    'mental_health_score', 'addiction_level',
-    'screen_time_before_sleep'
-]
-
-df = pd.read_csv(
-    io.StringIO(response.content.decode("utf-8")),
-    nrows=50000,
-    usecols=COLS
-)
-
-# Free memory immediately
-del response, session
-gc.collect()
-
-print(f"Loaded {len(df)} rows.")
+df = pd.read_csv(io.StringIO(response.content.decode("utf-8")))
+print("Done.")
 
 df['age_group'] = pd.cut(
     df['age'],
@@ -74,7 +58,7 @@ FEATURES = [
     'gender', 'primary_platform', 'purpose'
 ]
 
-train_sample = df_model.sample(5000, random_state=42)
+train_sample = df_model.sample(50000, random_state=42)
 X = train_sample[FEATURES]
 y = train_sample['addiction_encoded']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

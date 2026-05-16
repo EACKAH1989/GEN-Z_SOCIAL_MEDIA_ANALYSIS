@@ -6,49 +6,33 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, classification_report
 from sklearn.inspection import permutation_importance
 
-import os
-os.environ["MPLBACKEND"] = "Agg"
-
 import requests
 import io
-import gc  # garbage collector
 
 file_id = "13Ikzo0D-63clhK88URoF4y8ZUuKgjhNV"
 
 print("Loading dataset...")
 session = requests.Session()
+
+# First request to get the confirmation token
 response = session.get(
     "https://drive.google.com/uc",
     params={"export": "download", "id": file_id},
     stream=True
 )
+
+# Extract confirmation token from cookies
 token = response.cookies.get("download_warning")
+
+# Second request with confirmation token
 response = session.get(
     "https://drive.usercontent.google.com/download",
     params={"id": file_id, "export": "download", "confirm": token or "t"},
     stream=True
 )
 
-# Load only 50k rows, only the columns needed
-COLS = [
-    'age', 'gender', 'country', 'daily_usage_hours',
-    'primary_platform', 'num_platforms_used', 'purpose',
-    'avg_session_minutes', 'night_usage',
-    'mental_health_score', 'addiction_level',
-    'screen_time_before_sleep'
-]
-
-df = pd.read_csv(
-    io.StringIO(response.content.decode("utf-8")),
-    nrows=50000,
-    usecols=COLS
-)
-
-# Free memory immediately
-del response, session
-gc.collect()
-
-print(f"Loaded {len(df)} rows.")
+df = pd.read_csv(io.StringIO(response.content.decode("utf-8")))
+print("Done.")
 
 print(df.head(10))
 list(df.columns)
