@@ -6,9 +6,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, classification_report
 from sklearn.inspection import permutation_importance
 
+import os
+os.environ["MPLBACKEND"] = "Agg"
 
 import requests
 import io
+import gc  # garbage collector
 
 file_id = "13Ikzo0D-63clhK88URoF4y8ZUuKgjhNV"
 
@@ -26,11 +29,25 @@ response = session.get(
     stream=True
 )
 
-# Only load 100k rows instead of 1M
+# Load only 50k rows, only the columns needed
+COLS = [
+    'age', 'gender', 'country', 'daily_usage_hours',
+    'primary_platform', 'num_platforms_used', 'purpose',
+    'avg_session_minutes', 'night_usage',
+    'mental_health_score', 'addiction_level',
+    'screen_time_before_sleep'
+]
+
 df = pd.read_csv(
     io.StringIO(response.content.decode("utf-8")),
-    nrows=100000
+    nrows=50000,
+    usecols=COLS
 )
+
+# Free memory immediately
+del response, session
+gc.collect()
+
 print(f"Loaded {len(df)} rows.")
 
 print(df.head(10))
