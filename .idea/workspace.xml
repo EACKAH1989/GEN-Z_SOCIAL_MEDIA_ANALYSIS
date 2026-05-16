@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ee60462-13c9-482c-9957-ceaea381ab8a" name="Changes" comment="Dashboard Analysis updated">
-      <change afterPath="$PROJECT_DIR$/dashboard1.py" afterDir="false" />
+    <list default="true" id="4ee60462-13c9-482c-9957-ceaea381ab8a" name="Changes" comment="Fix Google Drive large file download">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard1.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard1.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +19,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory"><![CDATA[{
@@ -99,13 +100,39 @@
       <option name="project" value="LOCAL" />
       <updated>1778251396922</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Dashboard1 Analysis updated">
+      <option name="closed" value="true" />
+      <created>1778783921645</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778783921645</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Dashboard1 Analysis updated">
+      <option name="closed" value="true" />
+      <created>1778784086817</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1778784086817</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix Google Drive large file download">
+      <option name="closed" value="true" />
+      <created>1778891258716</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1778891258717</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Analysis" />
     <MESSAGE value="Dashboard Analysis" />
     <MESSAGE value="Dashboard Analysis updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dashboard Analysis updated" />
+    <MESSAGE value="Dashboard1 Analysis updated" />
+    <MESSAGE value="Fix Google Drive large file download" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Google Drive large file download" />
   </component>
 </project>

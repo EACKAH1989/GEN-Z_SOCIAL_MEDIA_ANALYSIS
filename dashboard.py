@@ -14,26 +14,24 @@ file_id = "13Ikzo0D-63clhK88URoF4y8ZUuKgjhNV"
 
 print("Loading dataset...")
 session = requests.Session()
-
-# First request to get the confirmation token
 response = session.get(
     "https://drive.google.com/uc",
     params={"export": "download", "id": file_id},
     stream=True
 )
-
-# Extract confirmation token from cookies
 token = response.cookies.get("download_warning")
-
-# Second request with confirmation token
 response = session.get(
     "https://drive.usercontent.google.com/download",
     params={"id": file_id, "export": "download", "confirm": token or "t"},
     stream=True
 )
 
-df = pd.read_csv(io.StringIO(response.content.decode("utf-8")))
-print("Done.")
+# Only load 100k rows instead of 1M
+df = pd.read_csv(
+    io.StringIO(response.content.decode("utf-8")),
+    nrows=100000
+)
+print(f"Loaded {len(df)} rows.")
 
 print(df.head(10))
 list(df.columns)
