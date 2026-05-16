@@ -7,7 +7,33 @@ from sklearn.metrics import roc_auc_score, classification_report
 from sklearn.inspection import permutation_importance
 
 
-df = pd.read_csv("genz_social_media_usage_1M.csv")
+import requests
+import io
+
+file_id = "13Ikzo0D-63clhK88URoF4y8ZUuKgjhNV"
+
+print("Loading dataset...")
+session = requests.Session()
+
+# First request to get the confirmation token
+response = session.get(
+    "https://drive.google.com/uc",
+    params={"export": "download", "id": file_id},
+    stream=True
+)
+
+# Extract confirmation token from cookies
+token = response.cookies.get("download_warning")
+
+# Second request with confirmation token
+response = session.get(
+    "https://drive.usercontent.google.com/download",
+    params={"id": file_id, "export": "download", "confirm": token or "t"},
+    stream=True
+)
+
+df = pd.read_csv(io.StringIO(response.content.decode("utf-8")))
+print("Done.")
 
 print(df.head(10))
 list(df.columns)
